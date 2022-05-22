@@ -15,11 +15,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         // Creates a local database for the device
         AppDatabase database = Room.databaseBuilder(getApplicationContext(),
                 AppDatabase.class, "database").enableMultiInstanceInvalidation().build();
         // Creates the Dao for the user.
         UserDao userDao = database.userDao();
-        userDao.insertAll();
+        // Insert
+        User user = new User();
+        user.firstName = "Bastian";
+        user.lastName = "Graver";
+        userDao.insert(user);
     }
 }
