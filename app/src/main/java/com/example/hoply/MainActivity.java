@@ -26,5 +26,6 @@ public class MainActivity extends AppCompatActivity {
         user.firstName = "Bastian";
         user.lastName = "Graver";
         userDao.insert(user);
+        //git
     }
 }
