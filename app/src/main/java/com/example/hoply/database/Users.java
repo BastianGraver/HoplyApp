@@ -9,6 +9,7 @@ import androidx.room.PrimaryKey;
 public class Users {
     @PrimaryKey
     @NonNull
+    @ColumnInfo(name = "id")
     public String id;
 
     @ColumnInfo(name = "name")

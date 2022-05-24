@@ -12,6 +12,9 @@ public interface UserDao {
     @Query("SELECT * FROM Users")
     List<Users> getAll();
 
+    @Query("SELECT * FROM Users where id = :input")
+    List<Users> findId(String input);
+
     @Query("DELETE FROM Users")
     public void nukeTable();
 

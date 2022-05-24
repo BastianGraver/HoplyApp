@@ -32,30 +32,27 @@ import com.example.hoply.database.AppDatabase;
 import com.example.hoply.database.Users;
 import com.example.hoply.database.UserDao;
 
-public class MainActivity extends AppCompatActivity {
-    public static AppDatabase database;
-    public static UserDao userDao;
-    TextView userCount;
-    EditText nameInput;
-    EditText userNameInput;
+public class Login extends AppCompatActivity {
+    EditText loginInput;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        // Creates a local database for the device
-        database = Room.databaseBuilder(getApplicationContext(),
-                AppDatabase.class, "database").allowMainThreadQueries().build();
-        // Creates the Dao for the user.
-        userDao = database.userDao();
-    }
+        setContentView(R.layout.activity_login);
 
-    public void toCreateUser(View view){
-        Intent newIntent = new Intent(getApplicationContext(), Create_User.class);
-        startActivity(newIntent);
+        loginInput = findViewById(R.id.Username_login);
     }
-    public void toLogin(View view){
-        Intent newIntent = new Intent(getApplicationContext(), Login.class);
-        startActivity(newIntent);
+    public void login(View view){
+        if (MainActivity.userDao.findId(loginInput.getText().toString()).size() >= 1){
+            Intent loginSwitch = new Intent(getApplicationContext(), User_Page.class);
+            loginSwitch.putExtra("Name", MainActivity.userDao.findId(loginInput.getText().toString()).get(0).name);
+            startActivity(loginSwitch);
+            finish();
+        }
+        else{
+            Button btn = (Button) view;
+            btn.setTextSize(8);
+            btn.setText("Wrong Username, Try again");
+        }
     }
 }
