@@ -4,27 +4,34 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import static android.util.Log.d;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.hoply.database.Posts;
+import com.example.hoply.database.PostsDao;
 import com.example.hoply.database.Users;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyViewHolder> {
-    private ArrayList<Users> userslist;
+    private ArrayList<Posts> postList;
 
-    public recyclerAdapter(ArrayList<Users> userslist){
-        this.userslist = userslist;
+    public recyclerAdapter(ArrayList<Posts> postList) {
+        this.postList = postList;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         private TextView nameTxt;
+        private TextView userTxt;
 
         public MyViewHolder(final View view){
             super(view);
-            nameTxt = view.findViewById(R.id.databaseName);
+            nameTxt = view.findViewById(R.id.DatabaseName);
+            userTxt = view.findViewById(R.id.Name);
         }
     }
 
@@ -37,12 +44,14 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull recyclerAdapter.MyViewHolder holder, int position) {
-        String name = userslist.get(position).name;
-        holder.nameTxt.setText(name);
+        String content = postList.get(position).content;
+        String name = MainActivity.userDao.findId(postList.get(position).user_id).get(0).name;
+        holder.nameTxt.setText(content);
+        holder.userTxt.setText(name);
     }
 
     @Override
     public int getItemCount() {
-        return userslist.size();
+        return postList.size();
     }
 }

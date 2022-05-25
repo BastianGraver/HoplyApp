@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.EditText;
 
 import com.example.hoply.database.AppDatabase;
+import com.example.hoply.database.PostsDao;
 import com.example.hoply.database.Users;
 import com.example.hoply.database.UserDao;
 
@@ -32,9 +33,13 @@ import com.example.hoply.database.AppDatabase;
 import com.example.hoply.database.Users;
 import com.example.hoply.database.UserDao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     public static AppDatabase database;
     public static UserDao userDao;
+    public static PostsDao postDao;
     TextView userCount;
     EditText nameInput;
     EditText userNameInput;
@@ -48,7 +53,9 @@ public class MainActivity extends AppCompatActivity {
                 AppDatabase.class, "database").allowMainThreadQueries().build();
         // Creates the Dao for the user.
         userDao = database.userDao();
-        d("Bastian", "Database size: " + userDao.getAll().size());
+        d("Bastian", "User Database size: " + userDao.getAll().size());
+        postDao = database.postsDao();
+        d("Bastian", "Post Database size: " + postDao.getAll().size());
     }
 
     public void toCreateUser(View view){

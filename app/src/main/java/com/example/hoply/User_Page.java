@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.EditText;
 
 import com.example.hoply.database.AppDatabase;
+import com.example.hoply.database.Posts;
 import com.example.hoply.database.Users;
 import com.example.hoply.database.UserDao;
 
@@ -40,25 +41,30 @@ import java.util.List;
 
 public class User_Page extends AppCompatActivity {
     TextView greetings;
-    private List<Users> usersList = new ArrayList<>();
+    private List<Users> usersList;
+    private List<Posts> postList;
     private RecyclerView recyclerView;
+    Users currentUser;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_page);
+        currentUser = MainActivity.userDao.findId(getIntent().getStringExtra("Name")).get(0);
         greetings = findViewById(R.id.Greetings);
-        greetings.setText("Hello " + getIntent().getStringExtra("Name"));
+        greetings.setText("Hello " + currentUser.name);
+
 
         usersList = MainActivity.userDao.getAll();
+        postList = MainActivity.postDao.getAll();
         recyclerView = findViewById(R.id.Feed);
         setAdapter();
 
     }
 
     private void setAdapter() {
-        recyclerAdapter adapter = new recyclerAdapter((ArrayList<Users>) usersList);
+        recyclerAdapter adapter = new recyclerAdapter((new ArrayList<Posts>(postList)));
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

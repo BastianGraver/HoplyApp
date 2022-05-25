@@ -33,7 +33,6 @@ public class Create_User extends AppCompatActivity {
             newUser.name = nameInput.getText().toString();
             newUser.timestamp = System.currentTimeMillis();
             MainActivity.userDao.insert(newUser);
-            d("Bastian", "Database Size: " + MainActivity.userDao.getAll().size());
             Intent newIntent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(newIntent);
             finish();
