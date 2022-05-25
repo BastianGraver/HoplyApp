@@ -16,6 +16,7 @@ import com.example.hoply.database.Users;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyViewHolder> {
     private ArrayList<Posts> postList;
@@ -54,4 +55,5 @@ public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.MyView
     public int getItemCount() {
         return postList.size();
     }
+
 }

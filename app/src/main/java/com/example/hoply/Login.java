@@ -45,7 +45,7 @@ public class Login extends AppCompatActivity {
     public void login(View view){
         if (MainActivity.userDao.findId(loginInput.getText().toString()).size() >= 1){
             Intent loginSwitch = new Intent(getApplicationContext(), User_Page.class);
-            loginSwitch.putExtra("Name", MainActivity.userDao.findId(loginInput.getText().toString()).get(0).id);
+            loginSwitch.putExtra("Username", MainActivity.userDao.findId(loginInput.getText().toString()).get(0).id);
             startActivity(loginSwitch);
             finish();
         }

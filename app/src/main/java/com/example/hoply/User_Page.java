@@ -41,9 +41,11 @@ import java.util.List;
 
 public class User_Page extends AppCompatActivity {
     TextView greetings;
+    EditText postInput;
     private List<Users> usersList;
     private List<Posts> postList;
     private RecyclerView recyclerView;
+    recyclerAdapter adapter;
     Users currentUser;
 
 
@@ -51,20 +53,26 @@ public class User_Page extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_page);
-        currentUser = MainActivity.userDao.findId(getIntent().getStringExtra("Name")).get(0);
+        // sets up the user greetings.
+        currentUser = MainActivity.userDao.findId(getIntent().getStringExtra("Username")).get(0);
         greetings = findViewById(R.id.Greetings);
         greetings.setText("Hello " + currentUser.name);
 
+        // init for user input.
+        postInput = findViewById(R.id.post_input);
 
+        // Sets up Daos
         usersList = MainActivity.userDao.getAll();
         postList = MainActivity.postDao.getAll();
+
+        // Sets up the recycleView.
         recyclerView = findViewById(R.id.Feed);
+        adapter = new recyclerAdapter((new ArrayList<Posts>(postList)));
         setAdapter();
 
     }
 
     private void setAdapter() {
-        recyclerAdapter adapter = new recyclerAdapter((new ArrayList<Posts>(postList)));
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -76,4 +84,15 @@ public class User_Page extends AppCompatActivity {
         startActivity(newIntent);
         finish();
     }
+
+    public void createPost(View view){
+        Posts post = new Posts();
+        post.content = postInput.getText().toString();
+        post.user_id = currentUser.id;
+        post.timestamp = System.currentTimeMillis();
+        MainActivity.postDao.insert(post);
+        adapter = new recyclerAdapter((new ArrayList<Posts>(postList)));
+        adapter.notifyDataSetChanged();
+    }
+
 }
