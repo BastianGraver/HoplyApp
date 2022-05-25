@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
                 AppDatabase.class, "database").allowMainThreadQueries().build();
         // Creates the Dao for the user.
         userDao = database.userDao();
+        d("Bastian", "Database size: " + userDao.getAll().size());
     }
 
     public void toCreateUser(View view){
