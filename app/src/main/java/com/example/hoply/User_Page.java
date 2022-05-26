@@ -51,6 +51,7 @@ public class User_Page extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_page);
         // sets up the user greetings.
@@ -91,8 +92,10 @@ public class User_Page extends AppCompatActivity {
         post.user_id = currentUser.id;
         post.timestamp = System.currentTimeMillis();
         MainActivity.postDao.insert(post);
+        postList = MainActivity.postDao.getAll();
         adapter = new recyclerAdapter((new ArrayList<Posts>(postList)));
         adapter.notifyDataSetChanged();
+        recyclerView.setAdapter(adapter);
     }
 
 }
